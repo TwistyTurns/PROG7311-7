@@ -1,0 +1,285 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FarmersMarketDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TBL_Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="EmployeeName" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="TBL_EmployeePassword">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="EmployeeID" Type="int" Nullable="false" />
+          <Property Name="hashedPassword" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="TBL_FarmerPassword">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="FarmerID" Type="int" Nullable="false" />
+          <Property Name="hashedPassword" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="TBl_Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ProductName" Type="nchar" MaxLength="10" />
+          <Property Name="ProductType" Type="nchar" MaxLength="10" />
+          <Property Name="FarmerId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Price per Unit (R)" Type="int" />
+        </EntityType>
+        <EntityType Name="TBLFarmer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="FarmerName" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK__TBL_Emplo__Emplo__2A4B4B5E">
+          <End Role="TBL_Employee" Type="Self.TBL_Employee" Multiplicity="1" />
+          <End Role="TBL_EmployeePassword" Type="Self.TBL_EmployeePassword" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TBL_EmployeePassword">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TBL_Farme__Farme__2D27B809">
+          <End Role="TBLFarmer" Type="Self.TBLFarmer" Multiplicity="1" />
+          <End Role="TBL_FarmerPassword" Type="Self.TBL_FarmerPassword" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBLFarmer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TBL_FarmerPassword">
+              <PropertyRef Name="FarmerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TBl_Produ__Farme__276EDEB3">
+          <End Role="TBLFarmer" Type="Self.TBLFarmer" Multiplicity="1" />
+          <End Role="TBl_Product" Type="Self.TBl_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBLFarmer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TBl_Product">
+              <PropertyRef Name="FarmerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FarmersMarketDBModelStoreContainer">
+          <EntitySet Name="TBL_Employee" EntityType="Self.TBL_Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_EmployeePassword" EntityType="Self.TBL_EmployeePassword" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBL_FarmerPassword" EntityType="Self.TBL_FarmerPassword" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBl_Product" EntityType="Self.TBl_Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TBLFarmer" EntityType="Self.TBLFarmer" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__TBL_Emplo__Emplo__2A4B4B5E" Association="Self.FK__TBL_Emplo__Emplo__2A4B4B5E">
+            <End Role="TBL_Employee" EntitySet="TBL_Employee" />
+            <End Role="TBL_EmployeePassword" EntitySet="TBL_EmployeePassword" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TBL_Farme__Farme__2D27B809" Association="Self.FK__TBL_Farme__Farme__2D27B809">
+            <End Role="TBLFarmer" EntitySet="TBLFarmer" />
+            <End Role="TBL_FarmerPassword" EntitySet="TBL_FarmerPassword" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TBl_Produ__Farme__276EDEB3" Association="Self.FK__TBl_Produ__Farme__276EDEB3">
+            <End Role="TBLFarmer" EntitySet="TBLFarmer" />
+            <End Role="TBl_Product" EntitySet="TBl_Product" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FarmersMarketDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TBL_Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="TBL_EmployeePassword" Relationship="Self.FK__TBL_Emplo__Emplo__2A4B4B5E" FromRole="TBL_Employee" ToRole="TBL_EmployeePassword" />
+        </EntityType>
+        <EntityType Name="TBL_EmployeePassword">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeID" Type="Int32" Nullable="false" />
+          <Property Name="hashedPassword" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="TBL_Employee" Relationship="Self.FK__TBL_Emplo__Emplo__2A4B4B5E" FromRole="TBL_EmployeePassword" ToRole="TBL_Employee" />
+        </EntityType>
+        <EntityType Name="TBL_FarmerPassword">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="FarmerID" Type="Int32" Nullable="false" />
+          <Property Name="hashedPassword" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="TBLFarmer" Relationship="Self.FK__TBL_Farme__Farme__2D27B809" FromRole="TBL_FarmerPassword" ToRole="TBLFarmer" />
+        </EntityType>
+        <EntityType Name="TBl_Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ProductName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ProductType" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="FarmerId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Price_per_Unit__R_" Type="Int32" />
+          <NavigationProperty Name="TBLFarmer" Relationship="Self.FK__TBl_Produ__Farme__276EDEB3" FromRole="TBl_Product" ToRole="TBLFarmer" />
+        </EntityType>
+        <EntityType Name="TBLFarmer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="FarmerName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="TBL_FarmerPassword" Relationship="Self.FK__TBL_Farme__Farme__2D27B809" FromRole="TBLFarmer" ToRole="TBL_FarmerPassword" />
+          <NavigationProperty Name="TBl_Product" Relationship="Self.FK__TBl_Produ__Farme__276EDEB3" FromRole="TBLFarmer" ToRole="TBl_Product" />
+        </EntityType>
+        <Association Name="FK__TBL_Emplo__Emplo__2A4B4B5E">
+          <End Role="TBL_Employee" Type="Self.TBL_Employee" Multiplicity="1" />
+          <End Role="TBL_EmployeePassword" Type="Self.TBL_EmployeePassword" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBL_Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TBL_EmployeePassword">
+              <PropertyRef Name="EmployeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TBL_Farme__Farme__2D27B809">
+          <End Role="TBLFarmer" Type="Self.TBLFarmer" Multiplicity="1" />
+          <End Role="TBL_FarmerPassword" Type="Self.TBL_FarmerPassword" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBLFarmer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TBL_FarmerPassword">
+              <PropertyRef Name="FarmerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TBl_Produ__Farme__276EDEB3">
+          <End Role="TBLFarmer" Type="Self.TBLFarmer" Multiplicity="1" />
+          <End Role="TBl_Product" Type="Self.TBl_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TBLFarmer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TBl_Product">
+              <PropertyRef Name="FarmerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FarmersMarketDBConnectionString" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TBL_Employee" EntityType="Self.TBL_Employee" />
+          <EntitySet Name="TBL_EmployeePassword" EntityType="Self.TBL_EmployeePassword" />
+          <EntitySet Name="TBL_FarmerPassword" EntityType="Self.TBL_FarmerPassword" />
+          <EntitySet Name="TBl_Product" EntityType="Self.TBl_Product" />
+          <EntitySet Name="TBLFarmers" EntityType="Self.TBLFarmer" />
+          <AssociationSet Name="FK__TBL_Emplo__Emplo__2A4B4B5E" Association="Self.FK__TBL_Emplo__Emplo__2A4B4B5E">
+            <End Role="TBL_Employee" EntitySet="TBL_Employee" />
+            <End Role="TBL_EmployeePassword" EntitySet="TBL_EmployeePassword" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TBL_Farme__Farme__2D27B809" Association="Self.FK__TBL_Farme__Farme__2D27B809">
+            <End Role="TBLFarmer" EntitySet="TBLFarmers" />
+            <End Role="TBL_FarmerPassword" EntitySet="TBL_FarmerPassword" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TBl_Produ__Farme__276EDEB3" Association="Self.FK__TBl_Produ__Farme__276EDEB3">
+            <End Role="TBLFarmer" EntitySet="TBLFarmers" />
+            <End Role="TBl_Product" EntitySet="TBl_Product" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FarmersMarketDBModelStoreContainer" CdmEntityContainer="FarmersMarketDBConnectionString">
+          <EntitySetMapping Name="TBL_Employee">
+            <EntityTypeMapping TypeName="FarmersMarketDBModel.TBL_Employee">
+              <MappingFragment StoreEntitySet="TBL_Employee">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EmployeeName" ColumnName="EmployeeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_EmployeePassword">
+            <EntityTypeMapping TypeName="FarmersMarketDBModel.TBL_EmployeePassword">
+              <MappingFragment StoreEntitySet="TBL_EmployeePassword">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="hashedPassword" ColumnName="hashedPassword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBL_FarmerPassword">
+            <EntityTypeMapping TypeName="FarmersMarketDBModel.TBL_FarmerPassword">
+              <MappingFragment StoreEntitySet="TBL_FarmerPassword">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FarmerID" ColumnName="FarmerID" />
+                <ScalarProperty Name="hashedPassword" ColumnName="hashedPassword" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBl_Product">
+            <EntityTypeMapping TypeName="FarmersMarketDBModel.TBl_Product">
+              <MappingFragment StoreEntitySet="TBl_Product">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductType" ColumnName="ProductType" />
+                <ScalarProperty Name="FarmerId" ColumnName="FarmerId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price_per_Unit__R_" ColumnName="Price per Unit (R)" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TBLFarmers">
+            <EntityTypeMapping TypeName="FarmersMarketDBModel.TBLFarmer">
+              <MappingFragment StoreEntitySet="TBLFarmer">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FarmerName" ColumnName="FarmerName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
